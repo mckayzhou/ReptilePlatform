@@ -23,7 +23,10 @@ public class ProxyProcessor implements PageProcessor {
 
     @Override
     public void process(Page page) {
-        page.putField("proxyIp",page.getHtml());
+        page.putField("odd",page.getHtml().xpath("//tr[@class='odd']").all());
+        page.putField("proxyIp",page.getHtml().xpath("//tr[@class=' ']").regex("\\d*\\.\\d*\\.\\d*\\.\\d*").all());
+        page.putField("proxyPort",page.getHtml().xpath("//tr[@class=' ']").regex("<td>\\d+</td>").all());
+        page.putField("origin",page.getHtml().xpath("//tr[@class=' ']").all());
     }
 
     @Override
